@@ -1,0 +1,122 @@
+查看logstash插件/opt/logstash/bin/logstash-plugin list
+=========================================
+input{ 
+  stdin{ codec => "json" }
+}
+
+filter{ 
+}
+
+output{ 
+  stdout{ codec => "json"}
+}
+=========================================
+input{ 
+}
+
+filter{ 
+}
+
+output{ 
+  stdout{ codec => "rubydebug"}
+}
+使用json输出
+=========================================
+logstash 官方手册
+https://www.elastic.co/guide/en/logstash/current/index.html
+=========================================
+官方文档:可以查看path
+++++++++++++++++++++++++++++++++++++++++
+file模块:
+input{ 
+   file { 
+       path => ["/tmp/a.log", "/var/tmp/b.log"]
+    }
+}
+
+filter{ 
+}
+
+output{
+  stdout { codec => "rubydebug" }
+}
+=========================================
+官方文档:可以查看file模块的参数:
+++++++++++++++++++++++++++++++++++++++++
+sincedb_path参数:记录读取文件的位置
+start_position参数:配置第一次读取文件从什么的方开始
+input{ 
+   file { 
+       path => ["/tmp/a.log", "/var/tmp/b.log"]
+       sincedb_path => "/var/lib/sincedb"
+       start_position => "beginning"
+    }
+}
+
+filter{ 
+}
+
+output{
+  stdout { codec => "rubydebug" }
+}
+=========================================
+给日志打标签:
+input{ 
+   file { 
+       path => ["/tmp/a.log"]			//路径
+       sincedb_path => "/var/lib/sincedb"	//指针文件路径
+       start_position => "beginning"		//指针文件起始位置
+       type  => "NSD1906"			//标签
+    }
+}
+
+filter{ 
+}
+
+output{
+  stdout { codec => "rubydebug" }
+}
+=========================================
+filter grok插件:
+/opt/logstash/vendor/bundle/jruby/1.9/gems/logstash-patterns-core-2.0.5/patterns/grok-patterns   //模板文件
+++++++++++++++++++++++++++++++++++++++++
+......
+
+filter{ 
+  grok {
+     match => { "message" => "%{COMBINEDAPACHELOG}" }
+   }
+}
+
+......
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
